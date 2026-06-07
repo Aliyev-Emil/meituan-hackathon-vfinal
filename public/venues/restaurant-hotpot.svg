@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs><linearGradient id="g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#ffc300"/></linearGradient></defs>
+  <rect width="600" height="400" fill="url(#g)"/>
+  <text x="300" y="170" text-anchor="middle" font-size="72"><r</text>
+  <text x="300" y="280" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#333">k � Hotpot</text>
+</svg>

@@ -1,0 +1,110 @@
+import { Restaurant } from "../types";
+import { venueImageUrl } from "../utils/images";
+
+type R = Omit<Restaurant, "imageUrl" | "description"> & { description: string };
+
+const RAW: R[] = [
+  { id: "r1", name: "Din Tai Fung", nameZh: "鼎泰丰", cuisine: "Taiwanese", cultureTag: "台式", district: "Nanshan", address: "MixC World, 9668 Shennan Blvd", lat: 22.517, lng: 113.934, rating: 4.8, pricePerPerson: 120, dietScore: 0.85, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 25, menuTypes: ["lunch", "dinner"], features: ["family friendly", "parking", "reservable"], description: "Famous xiaolongbao and delicate Taiwanese dishes in a calm dining room." },
+  { id: "r2", name: "Haidilao Hot Pot", nameZh: "海底捞", cuisine: "Hotpot", cultureTag: "火锅", district: "Futian", address: "COCO Park, 268 Fuhua 3rd Rd", lat: 22.534, lng: 114.054, rating: 4.6, pricePerPerson: 150, dietScore: 0.5, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 20, menuTypes: ["lunch", "dinner", "evening", "late_night"], features: ["family friendly", "reservable"], description: "Interactive hotpot with excellent service and late-night hours." },
+  { id: "r3", name: "Cantonese Garden", nameZh: "粤味轩", cuisine: "Cantonese", cultureTag: "粤菜", district: "Futian", address: "KK Mall, 5019 Shennan E Rd", lat: 22.545, lng: 114.118, rating: 4.7, pricePerPerson: 180, dietScore: 0.9, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 30, menuTypes: ["brunch", "lunch", "dinner"], features: ["quiet", "diet-friendly"], description: "Classic Cantonese flavors, dim sum, and quiet booths for family meals." },
+  { id: "r4", name: "Sushi Zen", nameZh: "禅寿司", cuisine: "Japanese", cultureTag: "日料", district: "Nanshan", address: "Sea World, 1128 Nanhai Ave", lat: 22.488, lng: 113.918, rating: 4.5, pricePerPerson: 200, dietScore: 0.95, familyFriendly: false, parking: false, quiet: true, reservable: true, avgPrepMin: 18, menuTypes: ["lunch", "dinner"], features: ["quiet", "diet-friendly"], description: "Fresh omakase-style sushi and light sets ideal for diet-conscious diners." },
+  { id: "r5", name: "Chuan Wei House", nameZh: "川味人家", cuisine: "Sichuan", cultureTag: "川菜", district: "Futian", address: "Central Walk, 3 Fuhua 1st Rd", lat: 22.541, lng: 114.062, rating: 4.4, pricePerPerson: 90, dietScore: 0.4, familyFriendly: true, parking: false, quiet: false, reservable: true, avgPrepMin: 15, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable"], description: "Bold Sichuan spices and generous portions for group dinners." },
+  { id: "r6", name: "Green Bowl", nameZh: "轻食碗", cuisine: "Healthy", cultureTag: "轻食", district: "Nanshan", address: "Tech Park, 1001 Keji S Rd", lat: 22.54, lng: 113.948, rating: 4.3, pricePerPerson: 65, dietScore: 0.98, familyFriendly: true, parking: false, quiet: true, reservable: false, avgPrepMin: 10, menuTypes: ["brunch", "lunch"], features: ["diet-friendly", "quick prep"], description: "Salads, grain bowls, and low-calorie lunch sets near offices." },
+  { id: "r7", name: "Bistro 188", nameZh: "西餐188", cuisine: "Western", cultureTag: "西餐", district: "Futian", address: "PAFC Mall, 5033 Yitian Rd", lat: 22.533, lng: 114.055, rating: 4.6, pricePerPerson: 220, dietScore: 0.7, familyFriendly: false, parking: true, quiet: true, reservable: true, avgPrepMin: 22, menuTypes: ["brunch", "lunch", "dinner"], features: ["parking", "quiet"], description: "Steaks, pasta, and wine pairings in a modern bistro setting." },
+  { id: "r8", name: "Office Noodles", nameZh: "办公拉面", cuisine: "Noodles", cultureTag: "面食", district: "Nanshan", address: "Shenzhen Bay, 3008 Binhai Ave", lat: 22.518, lng: 113.942, rating: 4.2, pricePerPerson: 45, dietScore: 0.6, familyFriendly: true, parking: false, quiet: false, reservable: false, avgPrepMin: 8, menuTypes: ["lunch", "late_night"], features: ["quick prep"], description: "Fast ramen and rice noodles — under 10 min average wait." },
+  { id: "r9", name: "Tea House Dim Sum", nameZh: "茶楼点心", cuisine: "Cantonese", cultureTag: "粤菜", district: "Luohu", address: "Dongmen Old Street, 2088 Dongmen Rd", lat: 22.548, lng: 114.125, rating: 4.5, pricePerPerson: 95, dietScore: 0.75, familyFriendly: true, parking: false, quiet: false, reservable: true, avgPrepMin: 20, menuTypes: ["brunch", "lunch", "afternoon"], features: ["family friendly"], description: "Traditional dim sum carts and Cantonese tea culture." },
+  { id: "r10", name: "Kids Cafe & Grill", nameZh: "亲子餐厅", cuisine: "Western", cultureTag: "西餐", district: "Nanshan", address: "OCT Harbor, 8 Baishi Rd", lat: 22.495, lng: 113.978, rating: 4.4, pricePerPerson: 110, dietScore: 0.8, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 18, menuTypes: ["lunch", "dinner", "afternoon"], features: ["kids menu", "parking"], description: "Play area plus kid-friendly grills and pasta." },
+  { id: "r11", name: "Bao'an Clay Pot", nameZh: "宝安砂锅", cuisine: "Cantonese", cultureTag: "粤菜", district: "Bao'an", address: "Haiya Happy Square, Bao'an", lat: 22.555, lng: 113.884, rating: 4.3, pricePerPerson: 85, dietScore: 0.8, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 22, menuTypes: ["lunch", "dinner"], features: ["quiet", "parking"], description: "Slow-cooked soups and clay-pot rice in a relaxed space." },
+  { id: "r12", name: "Longgang Night BBQ", nameZh: "龙岗夜宵烧烤", cuisine: "BBQ", cultureTag: "烧烤", district: "Longgang", address: "Longcheng Square, Longgang", lat: 22.72, lng: 114.246, rating: 4.2, pricePerPerson: 75, dietScore: 0.45, familyFriendly: false, parking: true, quiet: false, reservable: false, avgPrepMin: 12, menuTypes: ["evening", "late_night"], features: ["late night"], description: "Open past midnight with skewers and local Shenzhen BBQ." },
+  { id: "r13", name: "Shekou Seafood Pier", nameZh: "蛇口海鲜街", cuisine: "Seafood", cultureTag: "海鲜", district: "Nanshan", address: "Shekou Seafood St, Nanshan", lat: 22.478, lng: 113.912, rating: 4.5, pricePerPerson: 160, dietScore: 0.7, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 35, menuTypes: ["lunch", "dinner", "evening"], features: ["parking"], description: "Live seafood tanks and harbor views." },
+  { id: "r14", name: "Longhua Hunan Kitchen", nameZh: "龙华湘厨", cuisine: "Hunan", cultureTag: "湘菜", district: "Longhua", address: "Mintang Rd, Longhua", lat: 22.658, lng: 114.032, rating: 4.4, pricePerPerson: 70, dietScore: 0.5, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 16, menuTypes: ["lunch", "dinner"], features: ["reservable"], description: "Fiery Hunan dishes popular with young professionals." },
+  { id: "r15", name: "Futian Late Ramen", nameZh: "福田深夜拉面", cuisine: "Japanese", cultureTag: "日料", district: "Futian", address: "Gangxia North, Futian", lat: 22.542, lng: 114.068, rating: 4.3, pricePerPerson: 55, dietScore: 0.75, familyFriendly: false, parking: false, quiet: true, reservable: false, avgPrepMin: 9, menuTypes: ["evening", "late_night"], features: ["quick prep", "late night"], description: "Tonkotsu ramen until 2 AM for night owls." },
+  { id: "r16", name: "Yantian Port Cafe", nameZh: "盐田港咖啡餐吧", cuisine: "Western", cultureTag: "西餐", district: "Yantian", address: "Haishan Rd, Yantian", lat: 22.558, lng: 114.238, rating: 4.1, pricePerPerson: 98, dietScore: 0.82, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 14, menuTypes: ["brunch", "lunch", "afternoon"], features: ["quiet"], description: "Brunch plates and ocean breeze near the port." },
+  { id: "r17", name: "Pingshan Farm Table", nameZh: "坪山田园餐桌", cuisine: "Healthy", cultureTag: "轻食", district: "Pingshan", address: "Pingshan Blvd, Pingshan", lat: 22.698, lng: 114.338, rating: 4.0, pricePerPerson: 88, dietScore: 0.92, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 20, menuTypes: ["lunch", "dinner"], features: ["diet-friendly", "parking"], description: "Organic vegetables and light farm-to-table menus." },
+  { id: "r18", name: "Guangming Roasted Goose", nameZh: "光明烧鹅", cuisine: "Cantonese", cultureTag: "粤菜", district: "Guangming", address: "Guangming Ave", lat: 22.748, lng: 113.936, rating: 4.6, pricePerPerson: 110, dietScore: 0.65, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 25, menuTypes: ["lunch", "dinner"], features: ["family friendly"], description: "Signature roasted goose — worth the trip from downtown." },
+  { id: "r19", name: "Dapeng Coconut Chicken", nameZh: "大鹏椰子鸡", cuisine: "Hotpot", cultureTag: "火锅", district: "Dapeng", address: "Jiaochangwei, Dapeng", lat: 22.592, lng: 114.502, rating: 4.5, pricePerPerson: 130, dietScore: 0.88, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 28, menuTypes: ["lunch", "dinner"], features: ["diet-friendly", "quiet"], description: "Light coconut broth hotpot — popular with families." },
+  { id: "r20", name: "Luohu Midnight Congee", nameZh: "罗湖深夜粥铺", cuisine: "Cantonese", cultureTag: "粤菜", district: "Luohu", address: "Renmin S Rd, Luohu", lat: 22.532, lng: 114.112, rating: 4.2, pricePerPerson: 40, dietScore: 0.9, familyFriendly: true, parking: false, quiet: true, reservable: false, avgPrepMin: 7, menuTypes: ["late_night", "evening"], features: ["late night", "quick prep"], description: "Comfort congee and side dishes from 10 PM to 4 AM." },
+  { id: "r21", name: "Nanshan Cantonese Home", nameZh: "南山粤家厨", cuisine: "Cantonese", cultureTag: "粤菜", district: "Nanshan", address: "Houhai Ave, Nanshan", lat: 22.522, lng: 113.938, rating: 4.6, pricePerPerson: 130, dietScore: 0.88, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 22, menuTypes: ["lunch", "dinner", "evening", "late_night", "brunch"], features: ["family friendly", "quiet", "parking"], description: "Family-style Cantonese near Houhai — dim sum, seafood, and private rooms." },
+  { id: "r22", name: "Seoul Flame BBQ", nameZh: "首尔炭火烤肉", cuisine: "Korean", cultureTag: "韩式", district: "Futian", address: "Link City, 100 Fuhua Rd", lat: 22.536, lng: 114.049, rating: 4.5, pricePerPerson: 135, dietScore: 0.55, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 18, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable", "parking"], description: "Table-side Korean BBQ with marinated beef and banchan refills." },
+  { id: "r23", name: "Bangkok Garden", nameZh: "曼谷花园", cuisine: "Healthy", cultureTag: "泰餐", district: "Nanshan", address: "Coastal City, 33 Wenxin 5th Rd", lat: 22.526, lng: 113.931, rating: 4.4, pricePerPerson: 95, dietScore: 0.78, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 16, menuTypes: ["lunch", "dinner", "afternoon"], features: ["diet-friendly", "quiet"], description: "Tom yum, curries, and mango sticky rice in a leafy patio setting." },
+  { id: "r24", name: "Silk Road Lamb House", nameZh: "丝路羊肉串", cuisine: "BBQ", cultureTag: "烧烤", district: "Luohu", address: "Guomao, 3002 Renmin S Rd", lat: 22.539, lng: 114.108, rating: 4.3, pricePerPerson: 80, dietScore: 0.4, familyFriendly: true, parking: false, quiet: false, reservable: true, avgPrepMin: 14, menuTypes: ["lunch", "dinner", "evening", "late_night"], features: ["late night"], description: "Xinjiang-style lamb skewers, naan, and hand-pulled noodles." },
+  { id: "r25", name: "Trattoria Roma", nameZh: "罗马小馆", cuisine: "Western", cultureTag: "西餐", district: "Bao'an", address: "Uniwalk, 99 Xinhu Rd", lat: 22.558, lng: 113.892, rating: 4.5, pricePerPerson: 165, dietScore: 0.72, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 20, menuTypes: ["lunch", "dinner", "brunch"], features: ["parking", "quiet"], description: "Wood-fired pizza, fresh pasta, and tiramisu for weekend family lunches." },
+  { id: "r26", name: "Teochew Morning Porridge", nameZh: "潮汕早粥", cuisine: "Cantonese", cultureTag: "粤菜", district: "Longhua", address: "Minzhi Ave, Longhua", lat: 22.652, lng: 114.028, rating: 4.4, pricePerPerson: 55, dietScore: 0.85, familyFriendly: true, parking: true, quiet: true, reservable: false, avgPrepMin: 8, menuTypes: ["brunch", "morning", "late_night"], features: ["quick prep", "diet-friendly"], description: "Slow-simmered congee with pickled sides — opens before 7 AM." },
+  { id: "r27", name: "Spice Route Kitchen", nameZh: "香料之路", cuisine: "Healthy", cultureTag: "印餐", district: "Nanshan", address: "Shekou, Nanhai Blvd", lat: 22.482, lng: 113.908, rating: 4.3, pricePerPerson: 75, dietScore: 0.9, familyFriendly: true, parking: false, quiet: true, reservable: true, avgPrepMin: 17, menuTypes: ["lunch", "dinner"], features: ["diet-friendly", "quiet"], description: "Butter chicken, dal, and vegetarian thali sets with mild spice options." },
+  { id: "r28", name: "OCT Brunch Studio", nameZh: "华侨城早午餐", cuisine: "Western", cultureTag: "西餐", district: "Nanshan", address: "OCT Loft, Enping St", lat: 22.491, lng: 113.982, rating: 4.6, pricePerPerson: 105, dietScore: 0.8, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 12, menuTypes: ["brunch", "lunch", "afternoon"], features: ["quiet", "parking"], description: "Avocado toast, eggs Benedict, and specialty coffee in a loft courtyard." },
+  { id: "r29", name: "Malatang Lab", nameZh: "麻辣烫实验室", cuisine: "Sichuan", cultureTag: "川菜", district: "Futian", address: "Shopping Park, 269 Fuhua Rd", lat: 22.531, lng: 114.057, rating: 4.2, pricePerPerson: 50, dietScore: 0.45, familyFriendly: false, parking: false, quiet: false, reservable: false, avgPrepMin: 6, menuTypes: ["lunch", "dinner", "evening", "late_night"], features: ["quick prep"], description: "Pick-your-own ingredients — fast, spicy, and budget-friendly." },
+  { id: "r30", name: "Wagyu & Sake Bar", nameZh: "和牛清酒吧", cuisine: "Japanese", cultureTag: "日料", district: "Futian", address: "One Avenue, 2005 Shennan Blvd", lat: 22.545, lng: 114.061, rating: 4.7, pricePerPerson: 280, dietScore: 0.7, familyFriendly: false, parking: true, quiet: true, reservable: true, avgPrepMin: 25, menuTypes: ["dinner", "evening"], features: ["quiet", "reservable"], description: "A5 wagyu teppanyaki and sake pairings for date nights." },
+  { id: "r31", name: "Hunan Pepper Palace", nameZh: "湘辣府", cuisine: "Hunan", cultureTag: "湘菜", district: "Luohu", address: "King Glory Plaza, 2008 Renmin S Rd", lat: 22.541, lng: 114.115, rating: 4.5, pricePerPerson: 85, dietScore: 0.42, familyFriendly: true, parking: false, quiet: false, reservable: true, avgPrepMin: 15, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable"], description: "Stinky tofu, chopped chili fish head, and bold Hunan classics." },
+  { id: "r32", name: "Dameisha Beach Grill", nameZh: "大梅沙海滨烧烤", cuisine: "Seafood", cultureTag: "海鲜", district: "Yantian", address: "Dameisha Beach Rd", lat: 22.601, lng: 114.305, rating: 4.4, pricePerPerson: 140, dietScore: 0.68, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 30, menuTypes: ["lunch", "dinner", "afternoon", "evening"], features: ["parking", "family friendly"], description: "Grilled oysters and beachfront seafood platters after a swim." },
+  { id: "r33", name: "Pingshan Clay Oven", nameZh: "坪山窑烤坊", cuisine: "Noodles", cultureTag: "面食", district: "Pingshan", address: "Pingshan Center, 88 Pingshan Blvd", lat: 22.692, lng: 114.328, rating: 4.1, pricePerPerson: 42, dietScore: 0.7, familyFriendly: true, parking: true, quiet: true, reservable: false, avgPrepMin: 11, menuTypes: ["lunch", "dinner"], features: ["quick prep", "parking"], description: "Hand-pulled noodles and clay-oven flatbreads in a village-style hall." },
+  { id: "r34", name: "Hongdae Kitchen", nameZh: "弘大食堂", cuisine: "Korean", cultureTag: "韩式", district: "Nanshan", address: "Keji Park, 9999 Keyuan Rd", lat: 22.548, lng: 113.952, rating: 4.4, pricePerPerson: 88, dietScore: 0.72, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 16, menuTypes: ["lunch", "dinner"], features: ["family friendly", "reservable"], description: "Bibimbap, army stew, and crispy Korean fried chicken in a casual hall." },
+  { id: "r35", name: "Gangnam Chicken Lab", nameZh: "江南炸鸡社", cuisine: "Korean", cultureTag: "韩式", district: "Futian", address: "COCO Park B1, Fuhua 3rd Rd", lat: 22.532, lng: 114.051, rating: 4.3, pricePerPerson: 72, dietScore: 0.5, familyFriendly: true, parking: true, quiet: false, reservable: false, avgPrepMin: 12, menuTypes: ["lunch", "dinner", "evening", "late_night"], features: ["quick prep", "late night"], description: "Double-fried chicken, cheese balls, and soju-friendly platters until midnight." },
+  { id: "r36", name: "Kimchi & Soup House", nameZh: "泡菜汤屋", cuisine: "Korean", cultureTag: "韩式", district: "Nanshan", address: "Houhai Talent Park, 3288 Houhai Blvd", lat: 22.515, lng: 113.936, rating: 4.6, pricePerPerson: 95, dietScore: 0.68, familyFriendly: true, parking: false, quiet: true, reservable: true, avgPrepMin: 14, menuTypes: ["lunch", "dinner"], features: ["quiet", "reservable"], description: "Kimchi jjigae, soft tofu stew, and banchan sets — cozy family booths." },
+  { id: "r37", name: "Penang Street Kitchen", nameZh: "槟城小厨", cuisine: "Malaysian", cultureTag: "马来菜", district: "Nanshan", address: "Coastal City, Wenxin 3rd Rd", lat: 22.524, lng: 113.928, rating: 4.5, pricePerPerson: 78, dietScore: 0.7, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 15, menuTypes: ["lunch", "dinner", "afternoon"], features: ["family friendly", "parking"], description: "Char kway teow, laksa, and nasi lemak with sambal on the side." },
+  { id: "r38", name: "Satay Garden", nameZh: "沙爹花园", cuisine: "Malaysian", cultureTag: "马来菜", district: "Futian", address: "Link City, 118 Fuhua Rd", lat: 22.538, lng: 114.047, rating: 4.4, pricePerPerson: 85, dietScore: 0.58, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 18, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable", "parking"], description: "Chicken and beef satay, peanut sauce, and beef rendang with coconut rice." },
+  { id: "r39", name: "Malacca Bistro", nameZh: "马六甲餐吧", cuisine: "Malaysian", cultureTag: "马来菜", district: "Futian", address: "PAFC South Tower, Yitian Rd", lat: 22.531, lng: 114.058, rating: 4.2, pricePerPerson: 92, dietScore: 0.75, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 17, menuTypes: ["brunch", "lunch", "dinner"], features: ["quiet", "parking"], description: "Nyonya-style curries, roti canai, and kaya toast brunch sets." },
+  { id: "r40", name: "Anatolia Grill", nameZh: "安纳托利亚烤肉", cuisine: "Turkish", cultureTag: "土耳其菜", district: "Futian", address: "One Avenue, Shennan Blvd", lat: 22.544, lng: 114.063, rating: 4.5, pricePerPerson: 125, dietScore: 0.6, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 20, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable", "parking"], description: "Adana kebab, lahmacun, and mixed grill platters with fresh pide bread." },
+  { id: "r41", name: "Istanbul Nights", nameZh: "伊斯坦布尔之夜", cuisine: "Turkish", cultureTag: "土耳其菜", district: "Nanshan", address: "Sea World Plaza, 1187 Nanhai Ave", lat: 22.485, lng: 113.915, rating: 4.6, pricePerPerson: 145, dietScore: 0.65, familyFriendly: false, parking: true, quiet: true, reservable: true, avgPrepMin: 22, menuTypes: ["dinner", "evening"], features: ["quiet", "reservable"], description: "Meze spreads, slow-roasted lamb, and baklava by the marina." },
+  { id: "r42", name: "Bosphorus Cafe", nameZh: "博斯普鲁斯咖啡餐", cuisine: "Turkish", cultureTag: "土耳其菜", district: "Nanshan", address: "Shenzhen Bay MixC, 188 Binhai Ave", lat: 22.521, lng: 113.944, rating: 4.3, pricePerPerson: 68, dietScore: 0.8, familyFriendly: true, parking: true, quiet: true, reservable: true, avgPrepMin: 12, menuTypes: ["brunch", "lunch", "afternoon"], features: ["diet-friendly", "quiet"], description: "Menemen, gözleme, and Turkish tea — lighter lunch near the bay." },
+  { id: "r43", name: "KebabHouse", nameZh: "烤肉屋", cuisine: "Turkish", cultureTag: "土耳其菜", district: "Nanshan", address: "Houhai Rd, Nanshan", lat: 22.519, lng: 113.941, rating: 4.5, pricePerPerson: 118, dietScore: 0.62, familyFriendly: true, parking: true, quiet: false, reservable: true, avgPrepMin: 18, menuTypes: ["lunch", "dinner", "evening"], features: ["reservable", "parking"], description: "Charcoal döner, Adana kebab plates, and fresh pide — casual Turkish grill in Nanshan." },
+];
+
+/** Tonight's reservation fill rate per venue — lower = quieter, more tables left */
+const RESERVATION_LOAD: Record<string, number> = {
+  r1: 38,
+  r2: 91,
+  r3: 22,
+  r4: 18,
+  r5: 58,
+  r6: 12,
+  r7: 28,
+  r8: 72,
+  r9: 68,
+  r10: 55,
+  r11: 24,
+  r12: 82,
+  r13: 61,
+  r14: 52,
+  r15: 20,
+  r16: 26,
+  r17: 19,
+  r18: 64,
+  r19: 35,
+  r20: 15,
+  r21: 32,
+  r22: 74,
+  r23: 30,
+  r24: 78,
+  r25: 27,
+  r26: 14,
+  r27: 21,
+  r28: 33,
+  r29: 85,
+  r30: 40,
+  r31: 56,
+  r32: 70,
+  r33: 16,
+  r34: 62,
+  r35: 76,
+  r36: 29,
+  r37: 59,
+  r38: 66,
+  r39: 31,
+  r40: 63,
+  r41: 36,
+  r42: 23,
+  r43: 57,
+};
+
+function defaultReservationLoad(r: R): number {
+  if (RESERVATION_LOAD[r.id] != null) return RESERVATION_LOAD[r.id];
+  if (r.quiet) return 28;
+  if (/hotpot|bbq|malatang|烧烤|火锅/i.test(r.cuisine + r.features.join(" "))) return 78;
+  return 55;
+}
+
+export const RESTAURANTS: Restaurant[] = RAW.map((r) => ({
+  ...r,
+  reservationLoad: defaultReservationLoad(r),
+  imageUrl: venueImageUrl(r.id, "restaurant", r.cuisine),
+}));
